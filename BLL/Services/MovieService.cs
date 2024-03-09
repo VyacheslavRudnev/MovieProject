@@ -31,6 +31,12 @@ namespace BLL.Services
                 .Select(MapToMovie);
         }
 
+        public IEnumerable<Movie> GetById(int id)
+        {
+            return _repository.GetById(id)
+                .Select(MapToMovie);
+        }
+
         public void Remove(int id)
         {
             _repository.Remove(id);

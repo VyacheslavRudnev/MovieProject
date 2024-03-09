@@ -41,8 +41,6 @@ namespace DAL.Repository
             {
                 sqlConnection.Open();
 
-                //List<MovieEntity> list = new List<MovieEntity>();
-
                 SqlCommand select = new SqlCommand("select * from Movie", sqlConnection);
                 SqlDataReader reader = select.ExecuteReader();
 
@@ -59,6 +57,28 @@ namespace DAL.Repository
                 }
 
                 //return list;
+            }
+        }
+
+        public IEnumerable<MovieEntity> GetById(int id)
+        {
+            using (var sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+                SqlCommand select = new SqlCommand($"select * from Movie where id={id};", sqlConnection);
+                SqlDataReader reader = select.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    yield return new MovieEntity()
+                    {
+                        Id = reader.GetFieldValue<int>(0),
+                        Name = reader.GetFieldValue<string>(1),
+                        Time = (int)reader.GetFieldValue<TimeSpan>(2).Hours,
+                        Genre = reader.GetFieldValue<string>(3),
+                        Year = reader.GetFieldValue<int>(4),
+                    };
+                }
             }
         }
 

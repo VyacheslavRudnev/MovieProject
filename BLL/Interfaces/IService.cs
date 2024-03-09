@@ -12,5 +12,6 @@ namespace BLL.Interfaces
         void Add(T item);
         void Remove(int id);
         void Update(int id, T item);
+        IEnumerable<T> GetById(int id);
     }
 }
